@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="az" class="dark scroll-smooth overflow-x-clip">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SAHİL Baku — Digital Culinary Deck</title>
+  
+  <!-- Google Fonts: Outfit (Headings) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#08090B',
+              900: '#0D0E11',
+              850: '#13151A',
+              800: '#1A1D24',
+              700: '#242832',
+              600: '#323746'
+            },
+            amberCopper: {
+              300: '#F5C99B',
+              400: '#EAB27A',
+              500: '#E09F5A',
+              600: '#C7833F',
+              700: '#A26428'
+            },
+            sand: '#F7F4EF',
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Lock viewport axes on mobile so layout never jitters or slides horizontally */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Clean custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0D0E11;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(224, 159, 90, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(224, 159, 90, 0.6);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Horizontal Slide Deck Snap & Touch pan */
+    .snap-x-mandatory {
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      touch-action: pan-x;
+      overscroll-behavior-x: contain;
+    }
+    .snap-card {
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    /* Strictly centered modal container on both mobile and desktop */
+    .center-popup-backdrop {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px 96px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .center-popup-backdrop.hidden {
+      display: none;
+    }
+
+    .center-popup-panel {
+      width: 100%;
+      max-height: calc(100dvh - 120px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      margin-top: 8px;
+    }
+
+    @media (min-width: 640px) {
+      .center-popup-backdrop {
+        align-items: center;
+        padding: 24px;
+      }
+
+      .center-popup-panel {
+        max-height: 86dvh;
+        margin-top: 0;
+      }
+    }
+
+    /* Modern Glassmorphic Card Styles */
+    .modern-card {
+      background: rgba(26, 29, 36, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(224, 159, 90, 0.16);
+    }
+
+    .copper-glow {
+      box-shadow: 0 0 25px rgba(224, 159, 90, 0.18);
+    }
+
+    .copper-text-gradient {
+      background: linear-gradient(135deg, #F5C99B 0%, #E09F5A 60%, #C7833F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Standardized 44px Minimum Touch Target */
+    .touch-btn {
+      min-height: 44px;
+      min-width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body id="top" class="bg-obsidian-900 text-sand font-sans antialiased min-h-screen selection:bg-amberCopper-500 selection:text-obsidian-950">
+
+  <!-- TOP BAR & BRAND HEADER -->
+  <header class="sticky top-0 z-40 bg-obsidian-950/95 backdrop-blur-md border-b border-amberCopper-500/15">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
+      
+      <!-- LOGO: Scrolls smoothly to top (#top) — NO Instagram link/icon in header -->
+      <a href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-2 sm:gap-3 group min-w-0 shrink" title="SAHİL Baku — Ana Səhifə">
+        <div class="w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-xl border border-amberCopper-500/40 flex items-center justify-center bg-obsidian-850 group-hover:border-amberCopper-400 group-hover:bg-amberCopper-500/10 transition-all shadow-md">
+          <span class="font-display text-lg sm:text-2xl font-extrabold copper-text-gradient">S</span>
+        </div>
+        <div class="flex flex-col min-w-0">
+          <span class="font-display text-lg sm:text-2xl tracking-wider font-extrabold text-sand leading-none group-hover:text-amberCopper-400 transition-colors truncate">SAHİL</span>
+          <span class="text-[8px] sm:text-[9px] tracking-[0.14em] sm:tracking-[0.22em] text-amberCopper-500 uppercase font-semibold mt-0.5 sm:mt-1 truncate">Baku • Bar & Restaurant</span>
+        </div>
+      </a>
+
+      <!-- CONTROLS RIGHT -->
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        
+        <!-- Search Toggle -->
+        <button id="search-toggle-btn" class="touch-btn w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-obsidian-850 border border-amberCopper-500/20 text-amberCopper-400 hover:text-sand hover:border-amberCopper-400 transition-all" aria-label="Axtarış">
+          <i class="fa-solid fa-magnifying-glass text-xs sm:text-base"></i>
+        </button>
+
+        <!-- Trilingual Switcher -->
+        <div class="flex items-center bg-obsidian-850 rounded-xl p-0.5 sm:p-1 border border-amberCopper-500/20 text-[10px] sm:text-xs font-display">
+          <button onclick="setLanguage('az')" id="lang-az" class="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg font-bold transition-all bg-amberCopper-500 text-obsidian-950">AZ</button>
+          <button onclick="setLanguage('ru')" id="lang-ru" class="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg font-bold transition-all text-amberCopper-400 hover:text-sand">RU</button>
+          <button onclick="setLanguage('en')" id="lang-en" class="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg font-bold transition-all text-amberCopper-400 hover:text-sand">EN</button>
+        </div>
+
+        <!-- Table Order & Bill Estimator Drawer Trigger -->
+        <button id="cart-btn" onclick="toggleCartDrawer()" class="touch-btn h-9 sm:h-11 relative flex items-center gap-1.5 px-2.5 sm:px-4 rounded-xl bg-gradient-to-r from-amberCopper-500 to-amberCopper-600 text-obsidian-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all shadow-lg shadow-amberCopper-500/15">
+          <i class="fa-solid fa-receipt text-xs sm:text-sm"></i>
+          <span id="cart-badge-text" class="hidden sm:inline font-mono tabular-nums">0.00 ₼</span>
+          <span id="cart-count" class="w-4 h-4 sm:w-5 sm:h-5 rounded-md bg-obsidian-950 text-amberCopper-400 text-[10px] sm:text-xs font-bold flex items-center justify-center font-mono">0</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Collapsible Search Bar -->
+    <div id="search-overlay" class="hidden border-t border-amberCopper-500/10 bg-obsidian-850/95 px-4 py-3 max-w-7xl mx-auto">
+      <div class="relative max-w-2xl mx-auto flex items-center">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 text-amberCopper-500/60"></i>
+        <input type="text" id="menu-search-input" onkeyup="handleSearch()" placeholder="Xörək, kabab və ya içki axtarın..." class="w-full bg-obsidian-900 text-sand placeholder-amberCopper-500/40 text-sm rounded-xl pl-11 pr-10 py-3 border border-amberCopper-500/30 focus:outline-none focus:border-amberCopper-400">
+        <button onclick="clearSearch()" class="absolute right-3 text-amberCopper-500/60 hover:text-sand p-2">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="relative min-h-[44vh] flex items-center justify-center overflow-hidden border-b border-amberCopper-500/15">
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80" alt="Sahil Baku Atmosphere" class="w-full h-full object-cover opacity-25 filter contrast-125">
+      <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-obsidian-900/80 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 py-10 text-center flex flex-col items-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-obsidian-800/80 border border-amberCopper-500/30 text-amberCopper-400 text-[11px] sm:text-xs tracking-wider uppercase mb-4 backdrop-blur-md">
+        <i class="fa-solid fa-location-dot text-amberCopper-500"></i>
+        <span id="loc-text">NEFTÇİLƏR PROSPEKTİ 34, BAKI BULUVARI</span>
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-sand mb-3">
+        SAHİL <span class="copper-text-gradient italic font-light">BAKU</span>
+      </h1>
+      
+      <p id="hero-subtitle" class="text-xs sm:text-base text-sand/80 max-w-2xl font-light tracking-wide mb-6 leading-relaxed">
+        Xəzər sahilində milli kulinariya irsi və müasir premium gastronomik təcrübə
+      </p>
+
+      <!-- Reservation & Direct Call -->
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <a href="https://wa.me/994502850022?text=Salam%20Sahil%20Baku!%20Masa%20rezervasiyas%C4%B1%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" class="touch-btn px-6 rounded-xl bg-gradient-to-r from-amberCopper-500 to-amberCopper-600 text-obsidian-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all shadow-lg shadow-amberCopper-500/20 gap-2">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span id="btn-reserve">Masa Rezerv Et</span>
+        </a>
+        
+        <a href="tel:+994502850022" class="touch-btn px-5 rounded-xl bg-obsidian-800 border border-amberCopper-500/30 text-sand font-medium text-xs sm:text-sm hover:border-amberCopper-400 transition-all backdrop-blur-md gap-2 font-mono">
+          <i class="fa-solid fa-phone text-xs text-amberCopper-400"></i>
+          <span>050 285 00 22</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MASTER MENU DECK TABS (AUTHENTIC PDF DECKS ONLY) -->
+  <nav class="sticky top-16 sm:top-20 z-30 bg-obsidian-950/95 backdrop-blur-md border-b border-amberCopper-500/15 py-2.5 px-3 sm:px-4 shadow-xl">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5" id="deck-tabs-container">
+        
+        <button onclick="switchDeck('main')" id="tab-main" class="deck-tab shrink-0 h-10 sm:h-11 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap inline-flex items-center justify-center transition-all bg-amberCopper-500 text-obsidian-950 shadow-md gap-1.5 sm:gap-2">
+          <i class="fa-solid fa-utensils shrink-0"></i>
+          <span id="deck-lbl-main">Əsas Menyu</span>
+        </button>
+
+        <button onclick="switchDeck('breakfast')" id="tab-breakfast" class="deck-tab shrink-0 h-10 sm:h-11 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap inline-flex items-center justify-center transition-all bg-obsidian-800 text-amberCopper-400 border border-amberCopper-500/20 hover:border-amberCopper-400 hover:text-sand gap-1.5 sm:gap-2">
+          <i class="fa-solid fa-egg shrink-0"></i>
+          <span id="deck-lbl-breakfast">Səhər Yeməyi</span>
+        </button>
+
+        <button onclick="switchDeck('lunch')" id="tab-lunch" class="deck-tab shrink-0 h-10 sm:h-11 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap inline-flex items-center justify-center transition-all bg-obsidian-800 text-amberCopper-400 border border-amberCopper-500/20 hover:border-amberCopper-400 hover:text-sand gap-1.5 sm:gap-2">
+          <i class="fa-solid fa-bowl-food shrink-0"></i>
+          <span id="deck-lbl-lunch">Nahar Menyusu (Set)</span>
+          <span class="bg-amberCopper-500/20 text-amberCopper-400 text-[10px] px-1.5 py-0.5 rounded-md border border-amberCopper-500/30 font-mono">16 / 17 ₼</span>
+        </button>
+
+        <button onclick="switchDeck('bar')" id="tab-bar" class="deck-tab shrink-0 h-10 sm:h-11 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap inline-flex items-center justify-center transition-all bg-obsidian-800 text-amberCopper-400 border border-amberCopper-500/20 hover:border-amberCopper-400 hover:text-sand gap-1.5 sm:gap-2">
+          <i class="fa-solid fa-martini-glass-citrus shrink-0"></i>
+          <span id="deck-lbl-bar">Bar & İçkilər</span>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN APPLICATION CONTENT -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 min-h-[55vh]">
+    
+    <!-- CATEGORY PILLS & VIEW MODE TOOLBAR -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 mb-6">
+      <div id="category-pills" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="flex items-center justify-between sm:justify-end gap-3 border-t md:border-t-0 border-amberCopper-500/10 pt-3 md:pt-0">
+        <!-- Vegetarian Filter -->
+        <button id="veg-toggle" onclick="toggleVegFilter()" class="touch-btn px-3.5 rounded-xl bg-obsidian-800 border border-amberCopper-500/20 text-xs text-amberCopper-400 hover:text-sand transition-all gap-1.5">
+          <i class="fa-solid fa-leaf text-emerald-400"></i>
+          <span id="veg-toggle-lbl">Vegetarian (V)</span>
+        </button>
+
+        <!-- View Mode Switcher -->
+        <div class="flex items-center bg-obsidian-850 rounded-xl p-1 border border-amberCopper-500/20">
+          <button onclick="setViewMode('slide')" id="view-slide-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-amberCopper-500 text-obsidian-950">
+            <i class="fa-solid fa-sliders"></i>
+            <span id="lbl-view-slide">Slayd</span>
+          </button>
+          <button onclick="setViewMode('grid')" id="view-grid-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-amberCopper-400 hover:text-sand">
+            <i class="fa-solid fa-border-all"></i>
+            <span id="lbl-view-grid">Siyahı</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAROUSEL SLIDE MODE CONTAINER -->
+    <div id="slide-container-wrapper" class="relative">
+      <div class="hidden md:flex items-center justify-between absolute -left-5 -right-5 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
+        <button onclick="scrollDeck(-1)" class="pointer-events-auto touch-btn w-11 h-11 rounded-xl bg-obsidian-950/90 border border-amberCopper-500/40 text-amberCopper-400 hover:text-sand hover:border-amberCopper-400 transition-all shadow-xl backdrop-blur-md">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="scrollDeck(1)" class="pointer-events-auto touch-btn w-11 h-11 rounded-xl bg-obsidian-950/90 border border-amberCopper-500/40 text-amberCopper-400 hover:text-sand hover:border-amberCopper-400 transition-all shadow-xl backdrop-blur-md">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div id="slide-deck" class="flex gap-4 sm:gap-6 overflow-x-auto snap-x-mandatory no-scrollbar pb-6 pt-2">
+        <!-- Dynamic Slide Cards -->
+      </div>
+
+      <div id="carousel-controls" class="flex items-center justify-center gap-4 mt-2">
+        <span id="slide-counter" class="text-xs font-mono text-amberCopper-500/80 tabular-nums">1 / 10</span>
+        <div id="slide-dots" class="flex items-center gap-1.5"></div>
+      </div>
+    </div>
+
+    <!-- GRID MODE CONTAINER -->
+    <div id="grid-container-wrapper" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamic Grid Cards -->
+    </div>
+
+    <!-- NAHAR SET BUILDER CONTAINER -->
+    <div id="lunch-builder-deck" class="hidden">
+      <!-- Injected via JS -->
+    </div>
+
+  </main>
+
+  <!-- DISH DETAIL MODAL (STRICTLY CENTERED ON MOBILE & DESKTOP) -->
+  <div id="dish-modal" class="center-popup-backdrop z-50 hidden bg-obsidian-950/85 backdrop-blur-md">
+    <div class="center-popup-panel modern-card relative max-w-lg rounded-2xl border border-amberCopper-500/30 overflow-hidden shadow-2xl flex flex-col">
+      
+      <div class="relative flex-shrink-0">
+        <img id="modal-img" src="" alt="" class="w-full h-48 sm:h-64 object-cover" onerror="handleImageError(this, 'dish')">
+        <button onclick="closeDishModal()" class="touch-btn absolute top-3 right-3 w-10 h-10 rounded-xl bg-obsidian-950/80 border border-amberCopper-500/40 text-sand hover:bg-obsidian-950 transition-all">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-sand leading-snug"></h3>
+            <div class="flex items-center gap-2 mt-1">
+              <span id="modal-weight" class="text-xs text-amberCopper-500/80 font-mono tabular-nums"></span>
+              <span id="modal-dietary" class="hidden text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold">Vegetarian</span>
+            </div>
+          </div>
+          <span id="modal-price" class="font-display text-2xl font-bold copper-text-gradient font-mono tabular-nums"></span>
+        </div>
+
+        <div class="border-t border-amberCopper-500/10 pt-3">
+          <h4 id="modal-ingr-lbl" class="text-[11px] uppercase tracking-widest text-amberCopper-500 font-semibold mb-1">Tərkibi və Hazırlanması</h4>
+          <p id="modal-desc" class="text-xs sm:text-sm text-sand/80 leading-relaxed font-light"></p>
+        </div>
+
+        <div class="flex items-center justify-between border-t border-amberCopper-500/10 pt-4 mt-2">
+          <div class="flex items-center bg-obsidian-850 rounded-xl border border-amberCopper-500/20 p-1">
+            <button onclick="adjustModalQty(-1)" class="touch-btn w-9 h-9 rounded-lg text-amberCopper-400 hover:bg-obsidian-700 transition-all">
+              <i class="fa-solid fa-minus text-xs"></i>
+            </button>
+            <span id="modal-qty" class="w-8 text-center text-sm font-bold font-mono tabular-nums">1</span>
+            <button onclick="adjustModalQty(1)" class="touch-btn w-9 h-9 rounded-lg text-amberCopper-400 hover:bg-obsidian-700 transition-all">
+              <i class="fa-solid fa-plus text-xs"></i>
+            </button>
+          </div>
+
+          <button id="modal-add-btn" onclick="addModalItemToCart()" class="touch-btn flex-1 ml-3 px-5 rounded-xl bg-gradient-to-r from-amberCopper-500 to-amberCopper-600 text-obsidian-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all shadow-lg shadow-amberCopper-500/20 gap-2">
+            <i class="fa-solid fa-cart-plus"></i>
+            <span id="modal-add-lbl">Hesablayıcıya Əlavə Et</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TABLE ORDER DRAWER / BILL ESTIMATOR MODAL (STRICTLY CENTERED ON MOBILE & DESKTOP) -->
+  <div id="cart-drawer" class="center-popup-backdrop z-50 hidden bg-obsidian-950/85 backdrop-blur-md">
+    
+    <div class="center-popup-panel modern-card relative max-w-md rounded-2xl border border-amberCopper-500/30 shadow-2xl flex flex-col overflow-hidden">
+      
+      <div class="p-4 sm:p-5 border-b border-amberCopper-500/15 flex items-center justify-between bg-obsidian-850">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-amberCopper-500 text-lg"></i>
+          <h2 id="cart-title-lbl" class="font-display text-lg sm:text-xl font-bold text-sand">Masa Sifarişi və Hesab</h2>
+        </div>
+        <button onclick="toggleCartDrawer()" class="touch-btn p-2 text-amberCopper-500 hover:text-sand">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-3 min-h-[140px]">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="p-4 sm:p-5 border-t border-amberCopper-500/15 bg-obsidian-850/90 space-y-3">
+        <div class="flex justify-between text-xs text-sand/70">
+          <span id="lbl-subtotal">Məhsulların Məbləği:</span>
+          <span id="cart-subtotal-val" class="font-mono tabular-nums">0.00 ₼</span>
+        </div>
+        <div class="flex justify-between text-xs text-amberCopper-400">
+          <span id="lbl-service-charge">Xidmət Haqqı (7%):</span>
+          <span id="cart-service-val" class="font-mono tabular-nums">0.00 ₼</span>
+        </div>
+        <div class="flex justify-between text-base font-bold text-sand border-t border-amberCopper-500/15 pt-2">
+          <span id="lbl-grand-total">Yekun Hesab (ƏDV daxil):</span>
+          <span id="cart-grand-val" class="font-display text-xl copper-text-gradient font-mono tabular-nums">0.00 ₼</span>
+        </div>
+
+        <p id="lbl-pdf-note" class="text-[10px] text-sand/50 italic text-center leading-tight">
+          * Bütün qiymətlər ƏDV daxil olmaqla AZN ilə qeyd olunub. Hesaba 7% xidmət haqqı əlavə olunacaq.
+        </p>
+
+        <div class="space-y-2 pt-2">
+          <button onclick="sendOrderWhatsApp()" class="touch-btn w-full rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-bold text-xs sm:text-sm hover:brightness-110 transition-all gap-2 shadow-lg shadow-emerald-600/20">
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+            <span id="btn-send-wa">Sifarişi / Masa Rezervini WhatsApp-a Göndər</span>
+          </button>
+          
+          <div class="flex gap-2">
+            <a href="tel:+994502850022" class="touch-btn flex-1 rounded-xl bg-obsidian-800 border border-amberCopper-500/30 text-amberCopper-400 text-center font-bold text-xs hover:text-sand transition-all gap-1.5 font-mono">
+              <i class="fa-solid fa-phone"></i>
+              <span>050 285 00 22</span>
+            </a>
+            <button onclick="clearCart()" class="touch-btn px-4 rounded-xl bg-obsidian-800 border border-rose-500/30 text-rose-400 hover:text-rose-300 text-xs transition-all">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER SECTION (INSTAGRAM ICON EXCLUSIVELY LOCATED HERE) -->
+  <footer class="border-t border-amberCopper-500/15 bg-obsidian-950 text-sand/70 py-12 px-4 sm:px-6 lg:px-8 mt-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left items-center md:items-start">
+      
+      <div class="space-y-3">
+        <div class="flex items-center justify-center md:justify-start gap-3">
+          <h3 class="font-display text-2xl font-extrabold tracking-wider text-sand">SAHİL <span class="copper-text-gradient italic font-light">BAKU</span></h3>
+          
+          <!-- INSTAGRAM ICON LINK EXCLUSIVELY IN FOOTER (NO TEXT LABELS) -->
+          <a href="https://www.instagram.com/sahil_baku/" target="_blank" rel="noopener noreferrer" class="touch-btn w-9 h-9 rounded-xl bg-obsidian-850 border border-amberCopper-500/30 text-amberCopper-400 hover:text-sand hover:border-amberCopper-400 hover:bg-amberCopper-500/10 transition-all shadow-md" aria-label="SAHİL Baku Instagram">
+            <i class="fa-brands fa-instagram text-lg"></i>
+          </a>
+        </div>
+
+        <p id="ftr-about" class="text-xs text-sand/70 leading-relaxed font-light max-w-sm mx-auto md:mx-0">
+          Xəzər dənizinin sahilində yerləşən SAHİL Baku restoranı Şərq və Azərbaycan kulinariyasının ən nəfis təamlarını müasir atmosferdə təqdim edir.
+        </p>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <h4 id="ftr-contact-lbl" class="font-display text-sm font-bold text-amberCopper-400 uppercase tracking-wider">Əlaqə Və Rezervasiya</h4>
+        <p class="flex items-center justify-center md:justify-start gap-2 text-sand/80">
+          <i class="fa-solid fa-location-dot text-amberCopper-500"></i>
+          <span>Neftçilər Prospekti 34, Bakı Bulyvarı</span>
+        </p>
+        <p class="flex items-center justify-center md:justify-start gap-2 text-sand/80">
+          <i class="fa-solid fa-phone text-amberCopper-500"></i>
+          <a href="tel:+994502850022" class="hover:text-amberCopper-400 font-mono">+994 50 285 00 22</a>
+        </p>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <h4 id="ftr-hours-lbl" class="font-display text-sm font-bold text-amberCopper-400 uppercase tracking-wider">İş Saatları</h4>
+        <p class="text-sand/80"><span id="lbl-days">Hər gün:</span> <span class="font-mono text-amberCopper-300">10:00 - 00:00</span></p>
+        <p id="ftr-vat-note" class="text-[11px] text-sand/50 mt-4 leading-tight">
+          Bütün qiymətlər Manat (AZN) ilə ƏDV daxil olaraq qeyd olunub. Xidmət haqqı 7% təşkil edir.
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto border-t border-amberCopper-500/10 mt-8 pt-6 text-center text-[11px] text-sand/40 font-mono">
+      &copy; 2026 SAHİL Baku Bar & Restaurant. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- DATA & ENGINE SCRIPT -->
+  <script>
+    // --- TRILINGUAL DICTIONARY ---
+    const i18n = {
+      az: {
+        loc: "NEFTÇİLƏR PROSPEKTİ 34, BAKI BULUVARI",
+        subtitle: "Xəzər sahilində milli kulinariya irsi və müasir premium gastronomik təcrübə",
+        btnReserve: "Masa Rezerv Et",
+        deckMain: "Əsas Menyu",
+        deckBreakfast: "Səhər Yeməyi",
+        deckLunch: "Nahar Menyusu (Set)",
+        deckBar: "Bar & İçkilər",
+        vegToggle: "Vegetarian (V)",
+        viewSlide: "Slayd",
+        viewGrid: "Siyahı",
+        all: "Bütün Kateqoriyalar",
+        details: "Ətraflı",
+        add: "Əlavə Et",
+        subtotal: "Məhsulların Məbləği:",
+        serviceCharge: "Xidmət Haqqı (7%):",
+        grandTotal: "Yekun Hesab (ƏDV daxil):",
+        pdfNote: "* Bütün qiymətlər ƏDV daxil olmaqla AZN ilə qeyd olunub. Hesaba 7% xidmət haqqı əlavə olunacaq.",
+        sendWA: "Sifarişi / Masa Rezervini WhatsApp-a Göndər",
+        cartTitle: "Masa Sifarişi və Hesab",
+        emptyCart: "Sifariş siyahınız boşdur. Menyudan təamlar əlavə edin.",
+        ftrAbout: "Xəzər dənizinin sahilində yerləşən SAHİL Baku restoranı Şərq və Azərbaycan kulinariyasının ən nəfis təamlarını müasir atmosferdə təqdim edir.",
+        ftrContactLbl: "Əlaqə Və Rezervasiya",
+        ftrHoursLbl: "İş Saatları",
+        days: "Hər gün:",
+        vatNote: "Bütün qiymətlər Manat (AZN) ilə ƏDV daxil olaraq qeyd olunub. Xidmət haqqı 7% təşkil edir."
+      },
+      ru: {
+        loc: "ПР. НЕФТЯНИКОВ 34, БАКИНСКИЙ БУЛЬВАР",
+        subtitle: "Национальное кулинарное наследие и современные авторские блюда на берегу Каспия",
+        btnReserve: "Забронировать стол",
+        deckMain: "Основное Меню",
+        deckBreakfast: "Завтраки",
+        deckLunch: "Обеденный Сет",
+        deckBar: "Бар и Напитки",
+        vegToggle: "Вегетарианское (V)",
+        viewSlide: "Слайды",
+        viewGrid: "Списком",
+        all: "Все категории",
+        details: "Подробнее",
+        add: "Добавить",
+        subtotal: "Сумма заказа:",
+        serviceCharge: "Обслуживание (7%):",
+        grandTotal: "Итого к оплате:",
+        pdfNote: "* Все цены указаны в AZN, включая НДС. К счету добавляется 7% за обслуживание.",
+        sendWA: "Отправить заказ в WhatsApp",
+        cartTitle: "Ваш Заказ и Расчет",
+        emptyCart: "Ваша корзина пуста. Выберите блюда из меню.",
+        ftrAbout: "Ресторан SAHİL Baku предлагает изысканные блюда азербайджанской и восточной кухни на Каспийском побережье.",
+        ftrContactLbl: "Контакты и Резерв",
+        ftrHoursLbl: "Часы Работы",
+        days: "Ежедневно:",
+        vatNote: "Все цены указаны в манатах (AZN), включая НДС. Обслуживание 7%."
+      },
+      en: {
+        loc: "34 NEFTCHILAR AVE, BAKU SEASIDE BOULEVARD",
+        subtitle: "Caspian coastal heritage & refined contemporary Azerbaijani gastronomy",
+        btnReserve: "Book a Table",
+        deckMain: "Main Menu",
+        deckBreakfast: "Breakfast",
+        deckLunch: "Lunch Set Menu",
+        deckBar: "Bar & Drinks",
+        vegToggle: "Vegetarian (V)",
+        viewSlide: "Slide Deck",
+        viewGrid: "Grid View",
+        all: "All Categories",
+        details: "Details",
+        add: "Add to Order",
+        subtotal: "Subtotal:",
+        serviceCharge: "Service Charge (7%):",
+        grandTotal: "Grand Total (incl. VAT):",
+        pdfNote: "* All prices are in AZN including VAT. 7% service charge will be added to the bill.",
+        sendWA: "Send Order / Reservation via WhatsApp",
+        cartTitle: "Table Order & Bill Estimator",
+        emptyCart: "Your order list is empty. Select items from the menu deck.",
+        ftrAbout: "Located on the Caspian Boulevard, SAHİL Baku offers authentic Azerbaijani culinary heritage with elevated seaside luxury.",
+        ftrContactLbl: "Contact & Reservations",
+        ftrHoursLbl: "Opening Hours",
+        days: "Daily:",
+        vatNote: "All prices in AZN including VAT. 7% service charge applies."
+      }
+    };
+
+    // --- ACCURATE REAL SAHIL BAKU MENU DATA FROM PDF ---
+    const menuItems = [
+      // ==========================================
+      // 1. ƏSAS MENYU (MAIN MENU PDF)
+      // ==========================================
+      // Qəlyanaltılar (Starters)
+      {
+        id: "m-1", deck: "main", cat: "starters",
+        title: { az: "Qara Kürü (Beluqa)", ru: "Черная Икра Белуги", en: "Beluga Black Caviar" },
+        desc: { az: "Təzə kərə yağı, qızardılmış tostdan kasanı bəzəyən Xəzər beluqa kürüsü.", ru: "Каспийская черная икра белуги со сливочным маслом и тостами.", en: "Prime Caspian Beluga black caviar served with whipped butter and toasts." },
+        price: 175, weight: "50 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-2", deck: "main", cat: "starters",
+        title: { az: "Hisə Verilmiş Balıq Çeşidi", ru: "Рыбное Ассорти Копченое", en: "Cold Smoked Fish Platter" },
+        desc: { az: "Hisə verilmiş nərə balığı, nərə beluqa və qızılbalıq dilimləri.", ru: "Копченая осетрина, белорыбица и семга.", en: "Smoked Caspian sturgeon, beluga fish, and Atlantic salmon slices." },
+        price: 55, weight: "280 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-3", deck: "main", cat: "starters",
+        title: { az: "Badımcan Bükmələri Qoz İlə", ru: "Рулетики из Баклажанов с Орехами", en: "Eggplant Rolls with Walnut Paste" },
+        desc: { az: "Qovrulmuş badımcan dilimləri, ədviyyatlı qoz əzməsi və nar dənələri.", ru: "Обжаренные рулетики из баклажанов с ореховой начинкой и гранатом.", en: "Roasted eggplant slices stuffed with spiced walnut garlic paste." },
+        price: 12, weight: "220 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-4", deck: "main", cat: "starters",
+        title: { az: "Yerli Pendir Çeşidləri", ru: "Ассорти Местных Сыров", en: "Local Artisanal Cheese Selection" },
+        desc: { az: "Motal pendiri, şor, nehrə yağı və təzə göyərtilər.", ru: "Сыр мотал, домашний шор, масло и зелень.", en: "Aged motal cheese, white curd cheese, fresh butter and greens." },
+        price: 17, weight: "300 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=800&q=80"
+      },
+
+      // Salatlar (Salads)
+      {
+        id: "m-6", deck: "main", cat: "salads",
+        title: { az: "Ləziz Manqal Salatı", ru: "Салат Мангал", en: "Charcoal Smoked Mangal Salad" },
+        desc: { az: "Közdə bişmiş badımcan, bibər, təzə Bakı pomidoru və nehrə yağı.", ru: "Запеченные на углях баклажаны, перец, томаты и маслины.", en: "Coal-roasted eggplants, sweet bell peppers, Baku tomatoes, garlic oil." },
+        price: 12, weight: "240 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-7", deck: "main", cat: "salads",
+        title: { az: "Yay Ətirli Pomidor Salatı NarŞarab İlə", ru: "Салат из Бакинских Томатов с Наршарабом", en: "Baku Heirloom Tomato & Narsharab Salad" },
+        desc: { az: "Zirə pomidorları, nar dənələri, qırmızı soğan və narşarab sousu.", ru: "Томаты Зиря, зерна граната, красный лук и соус наршараб.", en: "Sweet Zira tomatoes, pomegranate seeds, red onion, Narsharab glaze." },
+        price: 13, weight: "260 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-8", deck: "main", cat: "salads",
+        title: { az: "Xırtıldayan Badımcan Salatı", ru: "Хрустящие Баклажаны", en: "Crispy Eggplant Sweet Chili Salad" },
+        desc: { az: "Qızardılmış xırçıltılı badımcan, pomidor, küncüt və şirin çili.", ru: "Хрустящие баклажаны, сочные томаты, кунжут и сладкий чили.", en: "Crispy fried eggplant cubes, fresh tomatoes, sesame, sweet chili dressing." },
+        price: 13, weight: "250 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+      },
+
+      // Şorbalar (Soups)
+      {
+        id: "m-10", deck: "main", cat: "soups",
+        title: { az: "Bakı Düşbərəsi", ru: "Бакинская Дюшбара", en: "Traditional Baku Dushbara Soup" },
+        desc: { az: "Xırda quzu ətli düşbərələr, zəfəran bulyonu və nanə qurusu.", ru: "Миниатюрные пельмени из баранины в бульоне с мятой.", en: "Handcrafted micro lamb dumplings in saffron-infused beef broth." },
+        price: 10, weight: "300 ml", dietary: [],
+        image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-12", deck: "main", cat: "soups",
+        title: { az: "Şəki Piti", ru: "Шекинский Пити", en: "Traditional Sheki Piti Clay Pot Stew" },
+        desc: { az: "Qozlu küpə qabda dəmlənmiş quzu əti, nohud, kestane və zəfəran.", ru: "Баранина с нутом, каштанами и шафраном в глиняном горшочке.", en: "Slow-cooked lamb stew with chickpeas, chestnuts, saffron in clay pot." },
+        price: 16, weight: "400 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80"
+      },
+
+      // Kabablar & Sac (Kebabs & Skillets)
+      {
+        id: "m-13", deck: "main", cat: "kebabs",
+        title: { az: "Nərə Balıq Kababı", ru: "Шашлык из Осетрины", en: "Wild Caspian Sturgeon Skewer Kebab" },
+        desc: { az: "Közdə bişirilmiş təzə Xəzər nərə balığı və narşarab sousu.", ru: "Сочный шашлык из каспийской осетрины с наршарабом.", en: "Flame-grilled Caspian sturgeon fillet served with pomegranate dip." },
+        price: 80, weight: "250 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-14", deck: "main", cat: "kebabs",
+        title: { az: "Döymüş Lülə Albalı İlə", ru: "Люля с Вишней", en: "Minced Lamb Lyulya with Sour Cherry" },
+        desc: { az: "Közdə manqalda bişmiş albalı souslu quzu lülə kababı.", ru: "Люля из баранины с вишневым соусом на углях.", en: "Minced spiced lamb kebab grilled over charcoal with sour cherry glaze." },
+        price: 16, weight: "220 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-15", deck: "main", cat: "kebabs",
+        title: { az: "Quzu Antrikotu", ru: "Антрекот из Баранины", en: "Lamb Rib Chop Antrikot Kebab" },
+        desc: { az: "Manqalda bişirilmiş təravətli quzu qabırğaları.", ru: "Нежные ребра баранины на мангале.", en: "Charcoal-grilled tender lamb rib chops seasoned with sumac." },
+        price: 20, weight: "250 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+      },
+
+      // Əsas Yeməklər (Mains)
+      {
+        id: "m-17", deck: "main", cat: "mains",
+        title: { az: "Şah Plov Quzu Əti İlə", ru: "Шах Плов с Бараниной", en: "Royal Crown Shah Pilaf with Lamb" },
+        desc: { az: "Qazmaq xəmirində zəfəranlı düyü, quzu əti, albuxara və kestane.", ru: "Плов в хрустящем теста с бараниной, сухофруктами и каштанами.", en: "Saffron basmati rice wrapped in crisp crust with lamb & chestnuts." },
+        price: 22, weight: "400 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "m-18", deck: "main", cat: "mains",
+        title: { az: "Ləziz Quzu Səbəti (Təndir)", ru: "Ягненок из Тендира (Корзина)", en: "Slow Roasted Tandir Lamb Basket" },
+        desc: { az: "Təndirdə xüsusi otlarla bişirilmiş bütöv quzu əti səbəti.", ru: "Томленая в тендире баранина с травяным маринадом.", en: "Tandir roasted tender lamb basket infused with aromatic herbs." },
+        price: 100, weight: "1.2 kg", dietary: [],
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+      },
+
+      // ==========================================
+      // 2. SƏHƏR YEMƏYİ (BREAKFAST PDF)
+      // ==========================================
+      {
+        id: "b-1", deck: "breakfast", cat: "sets",
+        title: { az: "SAHİL Səhər Yeməyi Seti (2 Nəfərlik)", ru: "Завтрак SAHİL (на 2 персоны)", en: "SAHİL Grand Breakfast Spread (2 Servings)" },
+        desc: { az: "Pomidor-yumurta, motal və ağ pendir, nehrə qaymağı, bal, mürəbbələr, qoğal və samovar çayı.", ru: "Помидор-юмурта, сыры, сливки, мед, варенье, гогал и чай.", en: "Skillet tomato eggs, artisanal cheeses, fresh kaymak, honey, qogal & tea." },
+        price: 30, weight: "700 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "b-2", deck: "breakfast", cat: "eggs",
+        title: { az: "Benedikt Yumurta Qızılbalıq İlə", ru: "Яйца Бенедикт с Семгой", en: "Eggs Benedict with Smoked Salmon" },
+        desc: { az: "Brioche tostu, paşot yumurta, hisə verilmiş qızılbalıq və hollandez sousu.", ru: "Яйцо пашот на бриоши со слабосоленой семгой и голландским соусом.", en: "Poached eggs on brioche with cured salmon and creamy hollandaise." },
+        price: 17, weight: "240 gr", dietary: [],
+        image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "b-3", deck: "breakfast", cat: "eggs",
+        title: { az: "Bakı Usulu Pomidor Yumurta", ru: "Бакинский Помидор-Юмурта", en: "Baku Tomato & Skillet Eggs" },
+        desc: { az: "Zirə pomidorlarında bişirilmiş kənd yumurtaları və nehrə yağı.", ru: "Яичница на бакинских томатах со сливочным маслом.", en: "Farm eggs cooked in rich caramelized Zira tomatoes and butter." },
+        price: 9, weight: "230 gr", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80"
+      },
+
+      // ==========================================
+      // 3. BAR & İÇKİLƏR (BAR & DRINKS PDF)
+      // ==========================================
+      {
+        id: "dr-1", deck: "bar", cat: "cocktails",
+        title: { az: "Baku Connection Signature Cocktail", ru: "Авторский Коктейль Baku Connection", en: "Baku Connection Signature Cocktail" },
+        desc: { az: "Vodka, zəfəran siropu, nar şirəsi, laym və nane.", ru: "Водка, шафрановый сироп, гранатовый сок и лайм.", en: "Vodka, house saffron syrup, fresh pomegranate juice, lime." },
+        price: 19, weight: "220 ml", dietary: [],
+        image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "dr-3", deck: "bar", cat: "lemonades",
+        title: { az: "Ev Usulu Tarxun və Limon Limonadı", ru: "Домашний Лимонад Тархун", en: "Homemade Fresh Tarragon Lemonade" },
+        desc: { az: "Təzə tarxun yarpaqları, limon şirəsi və qazlı su.", ru: "Лимонад из свежего тархуна и лимона.", en: "Hand-muddled tarragon, organic lemon juice, sparkling water." },
+        price: 10, weight: "400 ml", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "dr-4", deck: "bar", cat: "tea",
+        title: { az: "SAHİL Premium Çay Dəstgahı (Samovar)", ru: "Чайный Сет SAHİL с Самоварным Чаем", en: "SAHİL Samovar Tea Ceremony Set" },
+        desc: { az: "Lənkəran çayı, 4 cür mürəbbə, qoz, çərəzlər, limon və kəklikotu.", ru: "Чай из самовара, 4 вида варенья, орехи и чабрец.", en: "Samovar tea, 4 house jam varieties, nuts, lemon, and thyme." },
+        price: 45, weight: "Set", dietary: ["V"],
+        image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    // --- NAHAR SET DATA (LUNCH DECK) ---
+    const lunchSetData = {
+      set1: {
+        price: 16,
+        soups: {
+          az: ["Bakı Düşbərəsi", "Qırmızı Mərci Şorbası", "Dovğa"],
+          ru: ["Бакинская Дюшбара", "Чечевичный Суп", "Довга"],
+          en: ["Baku Dushbara Dumplings", "Red Lentil Soup", "Cold Herb Dovga"]
+        },
+        salads: {
+          az: ["Manqal Salatı", "Çoban Salatı", "Yay Pomidor Salatı"],
+          ru: ["Салат Мангал", "Салат Чобан", "Летний Салат"],
+          en: ["Smoked Mangal Salad", "Shepherd's Salad", "Fresh Baku Tomato Salad"]
+        },
+        mains: {
+          az: ["Toyuq Kababı", "Yarpaq Dolması", "Dana Qovurması"],
+          ru: ["Куриный Шашлык", "Долма в Листьях", "Говурма из Телятины"],
+          en: ["Grilled Chicken Kebab", "Grape Leaf Dolma", "Sautéed Veal Roast"]
+        },
+        drinks: {
+          az: ["Təbii Kompot (300ml)", "Ayran (300ml)", "Qara Çay"],
+          ru: ["Компот (300мл)", "Айран (300мл)", "Чай"],
+          en: ["Fruit Compote (300ml)", "Ayran (300ml)", "Black Tea"]
+        }
+      },
+      set2: {
+        price: 17,
+        soups: {
+          az: ["Bakı Düşbərəsi", "Xəzər Əriştəsi", "Cücə Şorbası"],
+          ru: ["Бакинская Дюшбара", "Аришта", "Куриный Суп"],
+          en: ["Baku Dushbara", "Arishta Noodle Soup", "Farm Chicken Soup"]
+        },
+        salads: {
+          az: ["Xırtıldayan Badımcan Salatı", "Paytaxt Salatı", "Mastxiyar"],
+          ru: ["Хрустящие Баклажаны", "Салат Столичный", "Мастхияр"],
+          en: ["Crispy Eggplant Salad", "Capital Salad", "Mastkhiyar Yogurt Dip"]
+        },
+        mains: {
+          az: ["Quzu Lüləsi", "Səbzi Plov", "Taskabab"],
+          ru: ["Люля из Баранины", "Сабзи Плов", "Таскабаб"],
+          en: ["Minced Lamb Lyulya", "Sabzi Herb Rice Pilaf", "Taskabab Beef Skillet"]
+        },
+        drinks: {
+          az: ["Ev Limonadı (300ml)", "Təbii Kompot (300ml)", "Qara Çay"],
+          ru: ["Лимонад (300мл)", "Компот (300мл)", "Чай"],
+          en: ["Homemade Lemonade (300ml)", "House Compote (300ml)", "Tea"]
+        }
+      }
+    };
+
+    // --- STATE ---
+    let currentLang = 'az';
+    let currentDeck = 'main';
+    let currentCategory = 'all';
+    let viewMode = 'slide';
+    let vegOnly = false;
+    let searchQuery = '';
+    let cart = [];
+    let modalItem = null;
+    let modalQty = 1;
+
+    let selectedLunchSetType = 'set1';
+    let lunchChoices = { soup: 0, salad: 0, main: 0, drink: 0 };
+
+    // SVG Pattern Fallback when image fails to load
+    function handleImageError(imgElement, type) {
+      const svgPlaceholder = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="100%" height="100%" fill="%231A1D24"/><circle cx="400" cy="270" r="110" fill="%23242832" stroke="%23E09F5A" stroke-width="3"/><path d="M350 270 Q400 220 450 270" fill="none" stroke="%23E09F5A" stroke-width="4"/><text x="50%" y="440" font-family="Outfit, sans-serif" font-size="28" font-weight="bold" fill="%23F5C99B" text-anchor="middle">SAHİL BAKU</text><text x="50%" y="480" font-family="Plus Jakarta Sans, sans-serif" font-size="18" fill="%23E09F5A" text-anchor="middle">Culinary Excellence</text></svg>`;
+      imgElement.src = svgPlaceholder;
+    }
+
+    window.onload = function() {
+      const savedCart = localStorage.getItem('sahil_cart_v3');
+      if (savedCart) {
+        try { cart = JSON.parse(savedCart); } catch(e){}
+      }
+      renderApp();
+      setupSearchToggle();
+    };
+
+    function renderApp() {
+      updateStaticText();
+      renderCategoryPills();
+      renderContent();
+      updateCartBadge();
+    }
+
+    function updateStaticText() {
+      const dict = i18n[currentLang];
+      document.getElementById('loc-text').innerText = dict.loc;
+      document.getElementById('hero-subtitle').innerText = dict.subtitle;
+      document.getElementById('btn-reserve').innerText = dict.btnReserve;
+      
+      document.getElementById('deck-lbl-main').innerText = dict.deckMain;
+      document.getElementById('deck-lbl-breakfast').innerText = dict.deckBreakfast;
+      document.getElementById('deck-lbl-lunch').innerText = dict.deckLunch;
+      document.getElementById('deck-lbl-bar').innerText = dict.deckBar;
+
+      document.getElementById('veg-toggle-lbl').innerText = dict.vegToggle;
+      document.getElementById('lbl-view-slide').innerText = dict.viewSlide;
+      document.getElementById('lbl-view-grid').innerText = dict.viewGrid;
+
+      document.getElementById('lbl-subtotal').innerText = dict.subtotal;
+      document.getElementById('lbl-service-charge').innerText = dict.serviceCharge;
+      document.getElementById('lbl-grand-total').innerText = dict.grandTotal;
+      document.getElementById('lbl-pdf-note').innerText = dict.pdfNote;
+      document.getElementById('btn-send-wa').innerText = dict.sendWA;
+      document.getElementById('cart-title-lbl').innerText = dict.cartTitle;
+
+      document.getElementById('ftr-about').innerText = dict.ftrAbout;
+      document.getElementById('ftr-contact-lbl').innerText = dict.ftrContactLbl;
+      document.getElementById('ftr-hours-lbl').innerText = dict.ftrHoursLbl;
+      document.getElementById('lbl-days').innerText = dict.days;
+      document.getElementById('ftr-vat-note').innerText = dict.vatNote;
+      document.getElementById('modal-add-lbl').innerText = dict.add;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      ['az', 'ru', 'en'].forEach(l => {
+        const btn = document.getElementById(`lang-${l}`);
+        if (l === lang) {
+          btn.className = "px-2.5 py-1.5 rounded-lg font-bold transition-all bg-amberCopper-500 text-obsidian-950";
+        } else {
+          btn.className = "px-2.5 py-1.5 rounded-lg font-bold transition-all text-amberCopper-400 hover:text-sand";
+        }
+      });
+      renderApp();
+    }
+
+    function switchDeck(deckId) {
+      currentDeck = deckId;
+      currentCategory = 'all';
+
+      document.querySelectorAll('.deck-tab').forEach(tab => {
+        tab.className = "deck-tab shrink-0 h-10 sm:h-11 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap inline-flex items-center justify-center transition-all bg-obsidian-800 text-amberCopper-400 border border-amberCopper-500/20 hover:border-amberCopper-400 hover:text-sand gap-1.5 sm:gap-2";
+      });
+
+      const activeTab = document.getElementById(`tab-${deckId}`);
+      if (activeTab) {
+        activeTab.className = "deck-tab shrink-0 h-10 sm:h-11 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap inline-flex items-center justify-center transition-all bg-amberCopper-500 text-obsidian-950 shadow-md gap-1.5 sm:gap-2";
+      }
+
+      renderApp();
+    }
+
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills');
+      if (currentDeck === 'lunch') {
+        container.innerHTML = '';
+        return;
+      }
+
+      let categories = [{ id: 'all', label: i18n[currentLang].all }];
+
+      if (currentDeck === 'main') {
+        categories.push(
+          { id: 'starters', label: currentLang === 'az' ? "Qəlyanaltılar" : (currentLang === 'ru' ? "Закуски" : "Starters") },
+          { id: 'salads', label: currentLang === 'az' ? "Salatlar" : (currentLang === 'ru' ? "Салаты" : "Salads") },
+          { id: 'soups', label: currentLang === 'az' ? "Şorbalar" : (currentLang === 'ru' ? "Супы" : "Soups") },
+          { id: 'kebabs', label: currentLang === 'az' ? "Kabablar & Sac" : (currentLang === 'ru' ? "Шашлыки и Садж" : "Kebabs & Skillets") },
+          { id: 'mains', label: currentLang === 'az' ? "Əsas Yeməklər" : (currentLang === 'ru' ? "Горячие блюда" : "Mains & Pilaf") }
+        );
+      } else if (currentDeck === 'breakfast') {
+        categories.push(
+          { id: 'sets', label: currentLang === 'az' ? "Setlər" : (currentLang === 'ru' ? "Сеты" : "Sets") },
+          { id: 'eggs', label: currentLang === 'az' ? "Yumurtalar" : (currentLang === 'ru' ? "Яйца" : "Eggs") }
+        );
+      } else if (currentDeck === 'bar') {
+        categories.push(
+          { id: 'cocktails', label: currentLang === 'az' ? "Kokteyllər" : (currentLang === 'ru' ? "Коктейли" : "Cocktails") },
+          { id: 'lemonades', label: currentLang === 'az' ? "Limonadlar" : (currentLang === 'ru' ? "Лимонады" : "Lemonades") },
+          { id: 'tea', label: currentLang === 'az' ? "Çay Dəstgahı" : (currentLang === 'ru' ? "Чайный Сет" : "Tea Ceremony") }
+        );
+      }
+
+      container.innerHTML = categories.map(cat => `
+        <button onclick="setSubCategory('${cat.id}')" class="shrink-0 h-9 sm:h-10 px-3 sm:px-3.5 rounded-xl text-xs font-semibold whitespace-nowrap inline-flex items-center justify-center transition-all ${currentCategory === cat.id ? 'bg-amberCopper-500/20 text-amberCopper-400 border border-amberCopper-500/50' : 'bg-obsidian-800 text-sand/70 border border-amberCopper-500/10 hover:text-sand'}">
+          ${cat.label}
+        </button>
+      `).join('');
+    }
+
+    function setSubCategory(catId) {
+      currentCategory = catId;
+      renderCategoryPills();
+      renderContent();
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      const slideBtn = document.getElementById('view-slide-btn');
+      const gridBtn = document.getElementById('view-grid-btn');
+
+      if (mode === 'slide') {
+        slideBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-amberCopper-500 text-obsidian-950";
+        gridBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-amberCopper-400 hover:text-sand";
+      } else {
+        gridBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-amberCopper-500 text-obsidian-950";
+        slideBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-amberCopper-400 hover:text-sand";
+      }
+
+      renderContent();
+    }
+
+    function toggleVegFilter() {
+      vegOnly = !vegOnly;
+      const btn = document.getElementById('veg-toggle');
+      if (vegOnly) {
+        btn.className = "touch-btn px-3.5 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-xs text-emerald-400 font-bold transition-all gap-1.5";
+      } else {
+        btn.className = "touch-btn px-3.5 rounded-xl bg-obsidian-800 border border-amberCopper-500/20 text-xs text-amberCopper-400 hover:text-sand transition-all gap-1.5";
+      }
+      renderContent();
+    }
+
+    function renderContent() {
+      const slideWrapper = document.getElementById('slide-container-wrapper');
+      const gridWrapper = document.getElementById('grid-container-wrapper');
+      const lunchDeck = document.getElementById('lunch-builder-deck');
+
+      if (currentDeck === 'lunch') {
+        slideWrapper.classList.add('hidden');
+        gridWrapper.classList.add('hidden');
+        lunchDeck.classList.remove('hidden');
+        renderLunchBuilder();
+        return;
+      } else {
+        lunchDeck.classList.add('hidden');
+      }
+
+      let items = menuItems.filter(item => item.deck === currentDeck);
+      
+      if (currentCategory !== 'all') {
+        items = items.filter(item => item.cat === currentCategory);
+      }
+
+      if (vegOnly) {
+        items = items.filter(item => item.dietary && item.dietary.includes('V'));
+      }
+
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase();
+        items = items.filter(item => 
+          item.title[currentLang].toLowerCase().includes(q) ||
+          item.desc[currentLang].toLowerCase().includes(q)
+        );
+      }
+
+      if (viewMode === 'slide') {
+        gridWrapper.classList.add('hidden');
+        slideWrapper.classList.remove('hidden');
+        renderSlideDeck(items);
+      } else {
+        slideWrapper.classList.add('hidden');
+        gridWrapper.classList.remove('hidden');
+        renderGridDeck(items);
+      }
+    }
+
+    function renderSlideDeck(items) {
+      const deck = document.getElementById('slide-deck');
+      const counter = document.getElementById('slide-counter');
+      const dotsContainer = document.getElementById('slide-dots');
+
+      if (items.length === 0) {
+        deck.innerHTML = `
+          <div class="w-full text-center py-12 text-amberCopper-500/60 font-light">
+            <i class="fa-solid fa-utensils text-3xl mb-2"></i>
+            <p>${currentLang === 'az' ? 'Axtarışa uyğun təam tapılmadı' : 'No items matched'}</p>
+          </div>
+        `;
+        counter.innerText = '0 / 0';
+        dotsContainer.innerHTML = '';
+        return;
+      }
+
+      deck.innerHTML = items.map(item => `
+        <div class="snap-card w-[82vw] sm:w-[320px] max-w-[360px] modern-card rounded-2xl overflow-hidden flex flex-col justify-between border border-amberCopper-500/20 hover:border-amberCopper-400/50 transition-all shadow-xl group">
+          
+          <div class="relative cursor-pointer" onclick="openDishModal('${item.id}')">
+            <img src="${item.image}" alt="${item.title[currentLang]}" class="w-full h-48 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-500" onerror="handleImageError(this, 'dish')">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
+            
+            <div class="absolute top-3 right-3 flex items-center gap-1.5">
+              ${item.dietary.includes('V') ? '<span class="px-2 py-0.5 rounded-md bg-emerald-500/90 text-obsidian-950 font-extrabold text-[10px]">V</span>' : ''}
+              <span class="px-2.5 py-1 rounded-md bg-obsidian-950/80 border border-amberCopper-500/30 text-amberCopper-400 text-xs font-mono tabular-nums backdrop-blur-md">${item.weight}</span>
+            </div>
+          </div>
+
+          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 onclick="openDishModal('${item.id}')" class="font-display text-lg sm:text-xl font-bold text-sand hover:text-amberCopper-400 cursor-pointer transition-colors leading-snug mb-1">
+                ${item.title[currentLang]}
+              </h3>
+              <p class="text-xs text-sand/70 line-clamp-2 font-light leading-relaxed">
+                ${item.desc[currentLang]}
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-amberCopper-500/10 pt-3">
+              <span class="font-display text-xl sm:text-2xl font-extrabold copper-text-gradient font-mono tabular-nums">${item.price} ₼</span>
+              
+              <div class="flex items-center gap-2">
+                <button onclick="openDishModal('${item.id}')" class="touch-btn px-3 rounded-lg bg-obsidian-800 border border-amberCopper-500/30 text-amberCopper-400 text-xs hover:text-sand transition-all">
+                  <i class="fa-solid fa-eye mr-1"></i> ${i18n[currentLang].details}
+                </button>
+                <button onclick="addToCartDirect('${item.id}')" class="touch-btn px-3.5 rounded-lg bg-gradient-to-r from-amberCopper-500 to-amberCopper-600 text-obsidian-950 font-bold text-xs hover:brightness-110 transition-all">
+                  + ${i18n[currentLang].add}
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      `).join('');
+
+      counter.innerText = `1 / ${items.length}`;
+      dotsContainer.innerHTML = items.map((_, i) => `
+        <span class="w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-amberCopper-400 w-4' : 'bg-amberCopper-500/30'}"></span>
+      `).join('');
+
+      deck.onscroll = function() {
+        const index = Math.round(deck.scrollLeft / (deck.firstElementChild ? deck.firstElementChild.offsetWidth : 300));
+        const currentIdx = Math.min(Math.max(0, index), items.length - 1);
+        counter.innerText = `${currentIdx + 1} / ${items.length}`;
+        
+        Array.from(dotsContainer.children).forEach((dot, i) => {
+          dot.className = i === currentIdx ? 'w-4 h-2 rounded-full bg-amberCopper-400 transition-all' : 'w-2 h-2 rounded-full bg-amberCopper-500/30 transition-all';
+        });
+      };
+    }
+
+    function scrollDeck(direction) {
+      const deck = document.getElementById('slide-deck');
+      const cardWidth = deck.firstElementChild ? deck.firstElementChild.offsetWidth + 24 : 320;
+      deck.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function renderGridDeck(items) {
+      const container = document.getElementById('grid-container-wrapper');
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 text-amberCopper-500/60 font-light">
+            <i class="fa-solid fa-utensils text-3xl mb-2"></i>
+            <p>${currentLang === 'az' ? 'Axtarışa uyğun təam tapılmadı' : 'No items found'}</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = items.map(item => `
+        <div class="modern-card rounded-2xl overflow-hidden flex flex-col justify-between border border-amberCopper-500/20 hover:border-amberCopper-400/40 transition-all shadow-lg group">
+          
+          <div class="relative cursor-pointer" onclick="openDishModal('${item.id}')">
+            <img src="${item.image}" alt="${item.title[currentLang]}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" onerror="handleImageError(this, 'dish')">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent"></div>
+            
+            <div class="absolute top-3 right-3 flex items-center gap-1.5">
+              ${item.dietary.includes('V') ? '<span class="px-2 py-0.5 rounded-md bg-emerald-500/90 text-obsidian-950 font-extrabold text-[10px]">V</span>' : ''}
+              <span class="px-2.5 py-1 rounded-md bg-obsidian-950/80 border border-amberCopper-500/30 text-amberCopper-400 text-xs font-mono tabular-nums backdrop-blur-md">${item.weight}</span>
+            </div>
+          </div>
+
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 onclick="openDishModal('${item.id}')" class="font-display text-lg font-bold text-sand hover:text-amberCopper-400 cursor-pointer transition-colors leading-snug mb-1">
+                ${item.title[currentLang]}
+              </h3>
+              <p class="text-xs text-sand/70 line-clamp-2 font-light">
+                ${item.desc[currentLang]}
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-amberCopper-500/10 pt-3">
+              <span class="font-display text-xl font-extrabold copper-text-gradient font-mono tabular-nums">${item.price} ₼</span>
+              <button onclick="addToCartDirect('${item.id}')" class="touch-btn px-3.5 rounded-lg bg-gradient-to-r from-amberCopper-500 to-amberCopper-600 text-obsidian-950 font-bold text-xs hover:brightness-110 transition-all">
+                + ${i18n[currentLang].add}
+              </button>
+            </div>
+          </div>
+
+        </div>
+      `).join('');
+    }
+
+    // --- NAHAR SET BUILDER ---
+    function renderLunchBuilder() {
+      const container = document.getElementById('lunch-builder-deck');
+      const setData = lunchSetData[selectedLunchSetType];
+
+      container.innerHTML = `
+        <div class="max-w-4xl mx-auto space-y-6">
+          <div class="text-center space-y-3">
+            <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-sand">SAHİL <span class="copper-text-gradient">İşgüzar Nahar Menyusu</span></h2>
+            <p class="text-xs sm:text-sm text-sand/70 max-w-xl mx-auto font-light">
+              Hər bölmədən 1 təam seçərək öz nahar mezonuzu yaradın.
+            </p>
+            
+            <div class="inline-flex p-1 bg-obsidian-850 rounded-xl border border-amberCopper-500/30 mt-2 font-display">
+              <button onclick="switchLunchSet('set1')" class="touch-btn px-4 sm:px-5 rounded-lg text-xs font-bold transition-all ${selectedLunchSetType === 'set1' ? 'bg-amberCopper-500 text-obsidian-950 shadow-md' : 'text-amberCopper-400 hover:text-sand'}">
+                Nahar Menyusu 1 (16 ₼)
+              </button>
+              <button onclick="switchLunchSet('set2')" class="touch-btn px-4 sm:px-5 rounded-lg text-xs font-bold transition-all ${selectedLunchSetType === 'set2' ? 'bg-amberCopper-500 text-obsidian-950 shadow-md' : 'text-amberCopper-400 hover:text-sand'}">
+                Nahar Menyusu 2 (17 ₼)
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 1: Soup -->
+          <div class="modern-card p-5 rounded-2xl border border-amberCopper-500/20 space-y-3">
+            <h3 class="font-display text-base sm:text-lg font-bold text-amberCopper-400 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-amberCopper-500/20 text-amberCopper-400 flex items-center justify-center text-xs font-mono">1</span>
+              Şorba Seçin
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              ${setData.soups[currentLang].map((soup, i) => `
+                <button onclick="selectLunchStep('soup', ${i})" class="touch-btn p-3.5 rounded-xl border text-left text-xs font-medium transition-all ${lunchChoices.soup === i ? 'bg-amberCopper-500/20 border-amberCopper-400 text-sand shadow-md' : 'bg-obsidian-850 border-amberCopper-500/10 text-sand/70 hover:border-amberCopper-500/30'}">
+                  <i class="fa-solid fa-circle-dot ${lunchChoices.soup === i ? 'text-amberCopper-400' : 'text-obsidian-700'} mr-2"></i>
+                  ${soup}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Step 2: Salad -->
+          <div class="modern-card p-5 rounded-2xl border border-amberCopper-500/20 space-y-3">
+            <h3 class="font-display text-base sm:text-lg font-bold text-amberCopper-400 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-amberCopper-500/20 text-amberCopper-400 flex items-center justify-center text-xs font-mono">2</span>
+              Salat Seçin
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              ${setData.salads[currentLang].map((salad, i) => `
+                <button onclick="selectLunchStep('salad', ${i})" class="touch-btn p-3.5 rounded-xl border text-left text-xs font-medium transition-all ${lunchChoices.salad === i ? 'bg-amberCopper-500/20 border-amberCopper-400 text-sand shadow-md' : 'bg-obsidian-850 border-amberCopper-500/10 text-sand/70 hover:border-amberCopper-500/30'}">
+                  <i class="fa-solid fa-circle-dot ${lunchChoices.salad === i ? 'text-amberCopper-400' : 'text-obsidian-700'} mr-2"></i>
+                  ${salad}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Step 3: Main -->
+          <div class="modern-card p-5 rounded-2xl border border-amberCopper-500/20 space-y-3">
+            <h3 class="font-display text-base sm:text-lg font-bold text-amberCopper-400 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-amberCopper-500/20 text-amberCopper-400 flex items-center justify-center text-xs font-mono">3</span>
+              Əsas Yemək Seçin
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              ${setData.mains[currentLang].map((main, i) => `
+                <button onclick="selectLunchStep('main', ${i})" class="touch-btn p-3.5 rounded-xl border text-left text-xs font-medium transition-all ${lunchChoices.main === i ? 'bg-amberCopper-500/20 border-amberCopper-400 text-sand shadow-md' : 'bg-obsidian-850 border-amberCopper-500/10 text-sand/70 hover:border-amberCopper-500/30'}">
+                  <i class="fa-solid fa-circle-dot ${lunchChoices.main === i ? 'text-amberCopper-400' : 'text-obsidian-700'} mr-2"></i>
+                  ${main}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Step 4: Drink -->
+          <div class="modern-card p-5 rounded-2xl border border-amberCopper-500/20 space-y-3">
+            <h3 class="font-display text-base sm:text-lg font-bold text-amberCopper-400 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-amberCopper-500/20 text-amberCopper-400 flex items-center justify-center text-xs font-mono">4</span>
+              İçki Seçin
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              ${setData.drinks[currentLang].map((drink, i) => `
+                <button onclick="selectLunchStep('drink', ${i})" class="touch-btn p-3.5 rounded-xl border text-left text-xs font-medium transition-all ${lunchChoices.drink === i ? 'bg-amberCopper-500/20 border-amberCopper-400 text-sand shadow-md' : 'bg-obsidian-850 border-amberCopper-500/10 text-sand/70 hover:border-amberCopper-500/30'}">
+                  <i class="fa-solid fa-circle-dot ${lunchChoices.drink === i ? 'text-amberCopper-400' : 'text-obsidian-700'} mr-2"></i>
+                  ${drink}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Summary Card -->
+          <div class="modern-card p-5 sm:p-6 rounded-2xl border-2 border-amberCopper-500/50 flex flex-col sm:flex-row items-center justify-between gap-4 copper-glow">
+            <div class="space-y-1 text-center sm:text-left">
+              <span class="text-[10px] tracking-widest text-amberCopper-500 uppercase font-bold">Seçdiyiniz Nahar Menyusu</span>
+              <h4 class="font-display text-base sm:text-lg font-bold text-sand">
+                ${setData.soups[currentLang][lunchChoices.soup]} + ${setData.salads[currentLang][lunchChoices.salad]} + ${setData.mains[currentLang][lunchChoices.main]} + ${setData.drinks[currentLang][lunchChoices.drink]}
+              </h4>
+              <p class="text-xs text-amberCopper-400 font-mono tabular-nums">Qiymət: ${setData.price} ₼ (+7% xidmət haqqı)</p>
+            </div>
+
+            <button onclick="addCustomLunchSetToCart()" class="touch-btn w-full sm:w-auto px-6 rounded-xl bg-gradient-to-r from-amberCopper-500 to-amberCopper-600 text-obsidian-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all shadow-xl shadow-amberCopper-500/20 whitespace-nowrap">
+              <i class="fa-solid fa-cart-plus mr-2"></i> Sifarişə Əlavə Et (${setData.price} ₼)
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function switchLunchSet(type) {
+      selectedLunchSetType = type;
+      lunchChoices = { soup: 0, salad: 0, main: 0, drink: 0 };
+      renderLunchBuilder();
+    }
+
+    function selectLunchStep(step, index) {
+      lunchChoices[step] = index;
+      renderLunchBuilder();
+    }
+
+    function addCustomLunchSetToCart() {
+      const setData = lunchSetData[selectedLunchSetType];
+      const title = `${selectedLunchSetType === 'set1' ? 'Nahar Menyusu 1' : 'Nahar Menyusu 2'} (${setData.soups[currentLang][lunchChoices.soup]}, ${setData.salads[currentLang][lunchChoices.salad]}, ${setData.mains[currentLang][lunchChoices.main]}, ${setData.drinks[currentLang][lunchChoices.drink]})`;
+
+      const setItem = {
+        id: `lunch-set-${Date.now()}`,
+        title: { az: title, ru: title, en: title },
+        price: setData.price,
+        weight: "1 Set"
+      };
+
+      cart.push({ item: setItem, qty: 1 });
+      saveAndRefreshCart();
+      toggleCartDrawer();
+    }
+
+    // --- MODAL & CART FUNCTIONS ---
+    function openDishModal(id) {
+      const item = menuItems.find(i => i.id === id);
+      if (!item) return;
+
+      modalItem = item;
+      modalQty = 1;
+
+      document.getElementById('modal-img').src = item.image;
+      document.getElementById('modal-title').innerText = item.title[currentLang];
+      document.getElementById('modal-weight').innerText = item.weight;
+      document.getElementById('modal-price').innerText = `${item.price} ₼`;
+      document.getElementById('modal-desc').innerText = item.desc[currentLang];
+      document.getElementById('modal-qty').innerText = '1';
+
+      const vegBadge = document.getElementById('modal-dietary');
+      if (item.dietary.includes('V')) {
+        vegBadge.classList.remove('hidden');
+      } else {
+        vegBadge.classList.add('hidden');
+      }
+
+      document.body.style.overflow = 'hidden';
+      document.getElementById('dish-modal').classList.remove('hidden');
+    }
+
+    function closeDishModal() {
+      document.getElementById('dish-modal').classList.add('hidden');
+      if (document.getElementById('cart-drawer').classList.contains('hidden')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function adjustModalQty(delta) {
+      modalQty = Math.max(1, modalQty + delta);
+      document.getElementById('modal-qty').innerText = modalQty;
+    }
+
+    function addModalItemToCart() {
+      if (!modalItem) return;
+      const existing = cart.find(c => c.item.id === modalItem.id);
+      if (existing) {
+        existing.qty += modalQty;
+      } else {
+        cart.push({ item: modalItem, qty: modalQty });
+      }
+      saveAndRefreshCart();
+      closeDishModal();
+      toggleCartDrawer();
+    }
+
+    function addToCartDirect(id) {
+      const item = menuItems.find(i => i.id === id);
+      if (!item) return;
+      const existing = cart.find(c => c.item.id === item.id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ item: item, qty: 1 });
+      }
+      saveAndRefreshCart();
+    }
+
+    function toggleCartDrawer() {
+      const drawer = document.getElementById('cart-drawer');
+      if (drawer.classList.contains('hidden')) {
+        drawer.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        renderCartItems();
+      } else {
+        drawer.classList.add('hidden');
+        if (document.getElementById('dish-modal').classList.contains('hidden')) {
+          document.body.style.overflow = '';
+        }
+      }
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cart-items-container');
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-amberCopper-500/50 space-y-2 font-light">
+            <i class="fa-solid fa-receipt text-3xl mb-1"></i>
+            <p class="text-xs">${i18n[currentLang].emptyCart}</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cart.map((c, idx) => `
+        <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-obsidian-850 border border-amberCopper-500/10">
+          <div class="flex-1 min-w-0">
+            <h4 class="font-medium text-xs text-sand truncate">${c.item.title[currentLang]}</h4>
+            <span class="text-[11px] text-amberCopper-400 font-mono tabular-nums">${c.item.price} ₼</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="flex items-center bg-obsidian-900 rounded-lg border border-amberCopper-500/20 p-0.5">
+              <button onclick="updateCartQty(${idx}, -1)" class="w-7 h-7 flex items-center justify-center text-amberCopper-400 hover:text-sand text-xs">
+                <i class="fa-solid fa-minus"></i>
+              </button>
+              <span class="w-6 text-center text-xs font-bold text-sand font-mono tabular-nums">${c.qty}</span>
+              <button onclick="updateCartQty(${idx}, 1)" class="w-7 h-7 flex items-center justify-center text-amberCopper-400 hover:text-sand text-xs">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+
+            <button onclick="removeCartItem(${idx})" class="p-1 text-rose-400/70 hover:text-rose-400 text-xs">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateCartQty(index, delta) {
+      if (cart[index]) {
+        cart[index].qty += delta;
+        if (cart[index].qty <= 0) {
+          cart.splice(index, 1);
+        }
+      }
+      saveAndRefreshCart();
+      renderCartItems();
+    }
+
+    function removeCartItem(index) {
+      cart.splice(index, 1);
+      saveAndRefreshCart();
+      renderCartItems();
+    }
+
+    function clearCart() {
+      cart = [];
+      saveAndRefreshCart();
+      renderCartItems();
+    }
+
+    function saveAndRefreshCart() {
+      localStorage.setItem('sahil_cart_v3', JSON.stringify(cart));
+      updateCartBadge();
+    }
+
+    function updateCartBadge() {
+      const countEl = document.getElementById('cart-count');
+      const badgeText = document.getElementById('cart-badge-text');
+
+      const totalQty = cart.reduce((sum, c) => sum + c.qty, 0);
+      const subtotal = cart.reduce((sum, c) => sum + (c.item.price * c.qty), 0);
+      const serviceCharge = subtotal * 0.07;
+      const grandTotal = subtotal + serviceCharge;
+
+      countEl.innerText = totalQty;
+      badgeText.innerText = `${grandTotal.toFixed(2)} ₼`;
+
+      document.getElementById('cart-subtotal-val').innerText = `${subtotal.toFixed(2)} ₼`;
+      document.getElementById('cart-service-val').innerText = `${serviceCharge.toFixed(2)} ₼`;
+      document.getElementById('cart-grand-val').innerText = `${grandTotal.toFixed(2)} ₼`;
+    }
+
+    function sendOrderWhatsApp() {
+      if (cart.length === 0) {
+        const noteEl = document.getElementById('lbl-pdf-note');
+        if (noteEl) {
+          const prevText = noteEl.innerText;
+          noteEl.innerText = i18n[currentLang].emptyCart;
+          noteEl.classList.add('text-amberCopper-400', 'not-italic', 'font-semibold');
+          setTimeout(() => {
+            noteEl.innerText = prevText;
+            noteEl.classList.remove('text-amberCopper-400', 'not-italic', 'font-semibold');
+          }, 2500);
+        }
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, c) => sum + (c.item.price * c.qty), 0);
+      const serviceCharge = subtotal * 0.07;
+      const grandTotal = subtotal + serviceCharge;
+
+      let msg = `Salam SAHİL Baku! Masa rezervasiyası / sifariş sorğusu:\n\n`;
+      msg += `*SİFARİŞ SİYAHISI:*\n`;
+
+      cart.forEach((c, idx) => {
+        msg += `${idx + 1}. ${c.item.title.az} (x${c.qty}) = ${(c.item.price * c.qty).toFixed(2)} AZN\n`;
+      });
+
+      msg += `\n----------------------\n`;
+      msg += `Məhsullar: ${subtotal.toFixed(2)} AZN\n`;
+      msg += `7% Xidmət Haqqı: ${serviceCharge.toFixed(2)} AZN\n`;
+      msg += `*YEKUN HESAB: ${grandTotal.toFixed(2)} AZN*\n\n`;
+      msg += `Rezervasiyanı təsdiləməyinizi xahiş edirəm.`;
+
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/994502850022?text=${encodedMsg}`, '_blank');
+    }
+
+    function setupSearchToggle() {
+      const btn = document.getElementById('search-toggle-btn');
+      const overlay = document.getElementById('search-overlay');
+      btn.onclick = function() {
+        overlay.classList.toggle('hidden');
+        if (!overlay.classList.contains('hidden')) {
+          document.getElementById('menu-search-input').focus();
+        }
+      };
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('menu-search-input').value;
+      renderContent();
+    }
+
+    function clearSearch() {
+      searchQuery = '';
+      document.getElementById('menu-search-input').value = '';
+      renderContent();
+    }
+  </script>
+</body>
+</html>
